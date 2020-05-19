@@ -9,6 +9,7 @@ import numpy as np
 from classify import get_cancer_class_from
 
 token = os.environ['TELEGRAM_ACCESS_TOKEN']
+webhook_url = os.environ['LB_WEBHOOK_URL']
 bot = telebot.TeleBot(token)
 
 
@@ -46,4 +47,4 @@ def get_image_from(message: telebot.types.Message) -> np.ndarray:
     return img
 
 
-bot.set_webhook(f"https://leskin-bot.ew.r.appspot.com/{token}")
+bot.set_webhook(f"{webhook_url}/{token}")
