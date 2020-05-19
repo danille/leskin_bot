@@ -1,9 +1,11 @@
-import time
+from typing import Optional
 
 import numpy as np
-from keras.models import load_model
+import tensorflow as tf
+from utils import load_model_from_filesystem
 
-model = load_model('full_skin_cancer_model.h5')
+GRAPH = tf.get_default_graph()
+MODEL = load_model_from_filesystem()
 
 
 def classify(image_array: np.ndarray) -> np.ndarray:
@@ -14,8 +16,30 @@ def classify(image_array: np.ndarray) -> np.ndarray:
     :return: NumPy array with probabilities for each class.
     Shape: [1, 7] as number of classes
     """
-    prediction = model.predict(image_array)
+    with GRAPH.as_default():
+        prediction = MODEL.predict(image_array)
     return prediction
+
+
+def crop_from_center(img, new_height, new_width):
+    """
+    Crop image center 
+    :param img: ND array with pixel values
+    :param new_height: height image should be cropped to
+    :param new_width: width image should be cropped to
+    :return: [new_height, new_width, channels] ND array with pixels values 
+    from center of original image  
+    """
+    width, height, channels = img.shape  # Get dimensions
+
+    left = int(np.ceil((width - new_width) / 2))
+    right = width - int(np.floor((width - new_width) / 2))
+
+    top = int(np.ceil((height - new_height) / 2))
+    bottom = height - int(np.floor((height - new_height) / 2))
+
+    center_cropped_img = img[top:bottom, left:right]
+    return center_cropped_img
 
 
 def prediction2class(prediction: np.ndarray, classes: list = None) -> int:
@@ -35,15 +59,13 @@ def prediction2class(prediction: np.ndarray, classes: list = None) -> int:
         return most_probable_class_index
 
 
-if __name__ == '__main__':
-    from keras.preprocessing.image import load_img, img_to_array
+def get_cancer_class_from(image: np.ndarray) -> Optional[str]:
+    _, input_height, input_width, _ = MODEL.input_shape
+    cropped_image = crop_from_center(image, input_height, input_width)
+    image_for_model = cropped_image.reshape((1, *cropped_image.shape))
+    prediction = classify(image_for_model)
 
-    image = load_img(
-        "/Users/dlebediev/workspace/leskin_bot/data/skin-cancer-mnist-ham10000/HAM10000_images/ISIC_0034297.jpg",
-        target_size=(299, 299))
-    image_arr = img_to_array(image)
-    image_reshaped = image_arr.reshape((1, *image_arr.shape))
-    start_time = time.time()
-    prediction = classify(image_reshaped)
-    predicted_class = prediction2class(prediction)
-    print(f"Class: {predicted_class}. Time to classify: {time.time() - start_time}")
+    if np.any(prediction > .5):
+        return f"{prediction2class(prediction)}"
+    else:
+        return None
