@@ -1,0 +1,1 @@
+web: gunicorn main:app :8080 -timeout 600 --preload
