@@ -5,6 +5,8 @@ RUN virtualenv -p python3.7 /env
 # source /env/bin/activate.
 ENV VIRTUAL_ENV /env
 ENV PATH /env/bin:$PATH
+
+# Setting up the name of the model file
 ENV MODEL_NAME "full_skin_cancer_model.h5"
 
 # Install some depedencies for openCV

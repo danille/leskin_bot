@@ -1,0 +1,7 @@
+#!include:.gitignore
+notebooks
+.gcloudignore
+.git
+.gitignore
+!secrets.yml
+model
