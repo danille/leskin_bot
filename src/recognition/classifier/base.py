@@ -5,7 +5,7 @@ from typing import List
 
 import numpy as np
 
-from src.classifier import ImageClassificationStrategy
+from src.recognition.classifier.strategy import ImageClassificationStrategy
 
 
 class ImageClassifier:
@@ -13,6 +13,7 @@ class ImageClassifier:
     Image classifier which classifies image
     using provided ImageClassificationStrategy
     """
+
     def __init__(self, image_classification_strategy: ImageClassificationStrategy, classes: List[str]):
         self._classification_strategy = image_classification_strategy
         self.classes = classes
@@ -24,5 +25,8 @@ class ImageClassifier:
         :param image: image which should be classified
         :return: name of the most probable class
         """
+        # TODO: add threshold of classification
+            # TODO: make strategy return the whole prediction array
         class_index = self._classification_strategy.run(image)
+
         return self.classes[class_index]

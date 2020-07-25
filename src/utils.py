@@ -4,9 +4,11 @@ import os
 
 from keras.models import load_model
 
-BASE_DIR = os.path.dirname(__file__)
+SRC_DIR = os.path.dirname(__file__)
+BASE_DIR = os.path.dirname(SRC_DIR)
 MODELS_DIR = os.path.join(BASE_DIR, "models")
 MODEL_NAME = os.environ["MODEL_NAME"]
+CONFIG_PATH = os.path.join(BASE_DIR, "application.cfg")
 
 
 def read_yaml(path2yml: str) -> typing.Dict:

@@ -5,6 +5,9 @@ All ImageClassificationStrategy'ies should inherit from it.
 import abc
 
 import numpy as np
+import tensorflow as tf
+
+from src.utils import load_model_from_filesystem
 
 
 class ImageClassificationStrategy(abc.ABC):
@@ -25,9 +28,11 @@ class CNNImageClassificationStrategy(ImageClassificationStrategy):
     Implementation of image classification strategy
     based on CNN model usage
     """
-    def __init__(self, model, graph):
-        self.model = model
-        self.graph = graph
+    NAME = "cnn"
+
+    def __init__(self):
+        self.model = load_model_from_filesystem()
+        self.graph = tf.get_default_graph()
 
     def run(self, image: np.ndarray) -> int:
         """

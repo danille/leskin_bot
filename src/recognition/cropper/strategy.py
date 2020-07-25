@@ -21,6 +21,8 @@ class BasicImageCropStrategy(ImageCropStrategy):
     Implementation of basic image crop strategy.py,
     which crops image around it's center.
     """
+    NAME = "basic"
+
     def __init__(self):
         pass
 
