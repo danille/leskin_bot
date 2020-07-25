@@ -4,7 +4,7 @@ All extensions of ImageCropper should inherit from this class
 """
 import numpy as np
 
-from cropper.strategy import ImageCropStrategy
+from src.cropper import ImageCropStrategy
 
 
 class ImageCropper:

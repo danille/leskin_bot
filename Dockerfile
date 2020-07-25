@@ -23,4 +23,4 @@ ADD . /app
 EXPOSE 8080
 # Run a WSGI server to serve the application. gunicorn must be declared as
 # a dependency in requirements.txt.
-CMD gunicorn main:app -b :8080 --timeout 600
+CMD gunicorn src:main:app -b :8080 --timeout 600

@@ -5,7 +5,7 @@ from typing import List
 
 import numpy as np
 
-from classifier.strategy import ImageClassificationStrategy
+from src.classifier import ImageClassificationStrategy
 
 
 class ImageClassifier:

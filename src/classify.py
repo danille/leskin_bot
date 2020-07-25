@@ -2,7 +2,7 @@ from typing import Optional
 
 import numpy as np
 import tensorflow as tf
-from utils import load_model_from_filesystem
+from src.utils import load_model_from_filesystem
 
 GRAPH = tf.get_default_graph()
 MODEL = load_model_from_filesystem()
