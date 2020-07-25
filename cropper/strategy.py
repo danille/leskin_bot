@@ -18,7 +18,7 @@ class ImageCropStrategy(abc.ABC):
 
 class BasicImageCropStrategy(ImageCropStrategy):
     """
-    Implementation of basic image crop strategy,
+    Implementation of basic image crop strategy.py,
     which crops image around it's center.
     """
     def __init__(self):
