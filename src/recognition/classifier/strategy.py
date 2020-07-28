@@ -30,9 +30,9 @@ class CNNImageClassificationStrategy(ImageClassificationStrategy):
     """
     NAME = "cnn"
 
-    def __init__(self):
-        self.model = load_model_from_filesystem()
-        self.graph = tf.get_default_graph()
+    def __init__(self, model, graph):
+        self.model = model
+        self.graph = graph
 
     def run(self, image: np.ndarray) -> int:
         """
@@ -44,3 +44,9 @@ class CNNImageClassificationStrategy(ImageClassificationStrategy):
             prediction = self.model.predict(image)
 
         return np.argmax(prediction)
+
+    @classmethod
+    def create(cls):
+        model = load_model_from_filesystem()
+        graph = tf.get_default_graph()
+        return cls(model, graph)

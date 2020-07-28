@@ -42,6 +42,6 @@ class RecognitionEngine:
         classification_strategy_name = classifier_config["classification_strategy"]
 
         cropper = ImageCropper(CROP_STRATEGY_MAP[crop_strategy_name]())
-        classifier = ImageClassifier(CLASSIFICATION_STRATEGY_MAP[classification_strategy_name](), list(range(10)))
+        classifier = ImageClassifier(CLASSIFICATION_STRATEGY_MAP[classification_strategy_name].create(), list(range(10)))
 
         return cls(classifier, cropper)
