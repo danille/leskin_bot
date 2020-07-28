@@ -1,4 +1,4 @@
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 
 import numpy as np
 
@@ -15,3 +15,11 @@ class TestClassificationStrategy:
         prediction = strategy.run(np.array([0.1, 0.1, 0.1]))
 
         assert (prediction == expected_prediction).all()
+
+    @patch("src.recognition.classifier.strategy.load_model_from_filesystem", Mock(return_value=Mock()))
+    def test_crete_cnn_strategy(self):
+        config = {"model_name": "foo"}
+        strategy = CNNImageClassificationStrategy.create(config)
+
+        assert strategy.model is not None
+        assert strategy.graph is not None

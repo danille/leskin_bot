@@ -1,10 +1,11 @@
+from configparser import ConfigParser
+
 import numpy as np
 
 from src.recognition.classifier import ImageClassifier
 from src.recognition.classifier.strategy import CNNImageClassificationStrategy
 from src.recognition.preproccesor.base import ImagePreprocessor
 from src.recognition.preproccesor.strategy import BasicImagePreprocessStrategy
-from configparser import ConfigParser
 
 CLASSIFIER_CONFIG_SECTION_NAME = 'recognition'
 
@@ -41,7 +42,8 @@ class RecognitionEngine:
         crop_strategy_name = classifier_config["crop_strategy"]
         classification_strategy_name = classifier_config["classification_strategy"]
 
-        cropper = ImagePreprocessor(PREPROCESS_STRATEGY_MAP[crop_strategy_name]())
-        classifier = ImageClassifier(CLASSIFICATION_STRATEGY_MAP[classification_strategy_name].create(), list(range(10)))
+        cropper = ImagePreprocessor(PREPROCESS_STRATEGY_MAP[crop_strategy_name].create())
+        classifier = ImageClassifier(CLASSIFICATION_STRATEGY_MAP[classification_strategy_name].create(),
+                                     list(range(10)))
 
         return cls(classifier, cropper)

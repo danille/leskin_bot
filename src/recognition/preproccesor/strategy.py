@@ -51,7 +51,7 @@ class BasicImagePreprocessStrategy(ImagePreprocessStrategy):
         return center_cropped_img
 
     @classmethod
-    def assemble(cls, config):
+    def create(cls, config):
         height = config["height"]
         width = config["width"]
         return cls(width, height)
