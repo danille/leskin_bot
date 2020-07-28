@@ -1,5 +1,6 @@
 from unittest.mock import Mock
 
+import numpy as np
 import pytest
 
 
@@ -16,3 +17,9 @@ def graph_mock():
     graph.as_default.return_value.__exit__ = Mock(return_value=False)
 
     return graph
+
+@pytest.fixture
+def classification_strategy_mock():
+    classification_strategy = Mock()
+    classification_strategy.run = Mock(return_value=np.array([.1, .2, .3]))
+    return classification_strategy

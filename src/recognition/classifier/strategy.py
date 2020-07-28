@@ -14,7 +14,7 @@ class ImageClassificationStrategy(abc.ABC):
     """
     Base class for image classification strategies
     """
-    def run(self, image: np.ndarray) -> int:
+    def run(self, image: np.ndarray) -> np.ndarray:
         """
         Abstract method for classification of the image
         :param image: image which should be classified
@@ -34,7 +34,7 @@ class CNNImageClassificationStrategy(ImageClassificationStrategy):
         self.model = model
         self.graph = graph
 
-    def run(self, image: np.ndarray) -> int:
+    def run(self, image: np.ndarray) -> np.ndarray:
         """
         Classify object on the image using the provided CNN model
         :param image: image which should be classified

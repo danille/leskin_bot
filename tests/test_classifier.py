@@ -6,11 +6,17 @@ from src.recognition.classifier import ImageClassifier
 
 
 class TestClassifier:
-    def test_classifier(self):
-        classification_strategy = Mock()
-        classification_strategy.run = Mock(return_value=np.array([.1, .2, .3]))
-        classifier = ImageClassifier(classification_strategy, ["foo", "bar", "test"])
+    def test_classifier_above_threshold(self, classification_strategy_mock):
+        classifier = ImageClassifier(classification_strategy_mock, ["foo", "bar", "test"], "default", 0.3)
         expected_result = "test"
         result = classifier.classify(np.array([1, 1, 1]))
 
         assert result == expected_result
+
+    def test_classifier_under_threshold(self, classification_strategy_mock):
+        classifier = ImageClassifier(classification_strategy_mock, ["foo", "bar", "test"], "default", 0.4)
+        expected_result = "default"
+        result = classifier.classify(np.array([1, 1, 1]))
+
+        assert result == expected_result
+
