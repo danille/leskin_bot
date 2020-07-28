@@ -2,20 +2,20 @@ import numpy as np
 
 from src.recognition.classifier import ImageClassifier
 from src.recognition.classifier.strategy import CNNImageClassificationStrategy
-from src.recognition.cropper.base import ImageCropper
-from src.recognition.cropper.strategy import BasicImageCropStrategy
+from src.recognition.preproccesor.base import ImagePreprocessor
+from src.recognition.preproccesor.strategy import BasicImagePreprocessStrategy
 from configparser import ConfigParser
 
 CLASSIFIER_CONFIG_SECTION_NAME = 'recognition'
 
 CLASSIFICATION_STRATEGY_MAP = {CNNImageClassificationStrategy.NAME: CNNImageClassificationStrategy}
-CROP_STRATEGY_MAP = {BasicImageCropStrategy.NAME: BasicImageCropStrategy}
+PREPROCESS_STRATEGY_MAP = {BasicImagePreprocessStrategy.NAME: BasicImagePreprocessStrategy}
 
 
 class RecognitionEngine:
-    def __init__(self, image_classifier: ImageClassifier, image_cropper: ImageCropper):
+    def __init__(self, image_classifier: ImageClassifier, image_preprocessor: ImagePreprocessor):
         self.image_classifier = image_classifier
-        self.image_cropper = image_cropper
+        self.image_preprocessor = image_preprocessor
 
     def classify(self, image: np.ndarray) -> str:
         """
@@ -23,7 +23,7 @@ class RecognitionEngine:
         :param image: raw user image
         :return: name of the predicted class
         """
-        cropped_image = self.image_cropper.crop(image)
+        cropped_image = self.image_preprocessor.preprocess(image)
         predicted_class = self.image_classifier.classify(cropped_image)
         return predicted_class
 
@@ -41,7 +41,7 @@ class RecognitionEngine:
         crop_strategy_name = classifier_config["crop_strategy"]
         classification_strategy_name = classifier_config["classification_strategy"]
 
-        cropper = ImageCropper(CROP_STRATEGY_MAP[crop_strategy_name]())
+        cropper = ImagePreprocessor(PREPROCESS_STRATEGY_MAP[crop_strategy_name]())
         classifier = ImageClassifier(CLASSIFICATION_STRATEGY_MAP[classification_strategy_name].create(), list(range(10)))
 
         return cls(classifier, cropper)

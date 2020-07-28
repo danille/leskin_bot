@@ -4,7 +4,7 @@ from src.recognition.engine import RecognitionEngine
 from src.utils import load_model_from_filesystem
 from src.recognition.classifier.strategy import CNNImageClassificationStrategy
 
-from src.recognition.cropper.strategy import BasicImageCropStrategy
+from src.recognition.preproccesor.strategy import BasicImagePreprocessStrategy
 from src.utils import CONFIG_PATH
 
 
