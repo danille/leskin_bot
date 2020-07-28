@@ -15,4 +15,3 @@ class TestClassificationStrategy:
         prediction = strategy.run(np.array([0.1, 0.1, 0.1]))
 
         assert (prediction == expected_prediction).all()
-

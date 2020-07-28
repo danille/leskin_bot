@@ -1,7 +1,7 @@
 """
 This modules contains implementation of ImageClassifier
 """
-from typing import List, Optional, Union
+from typing import List, Union
 
 import numpy as np
 

@@ -14,6 +14,7 @@ class ImageClassificationStrategy(abc.ABC):
     """
     Base class for image classification strategies
     """
+
     def run(self, image: np.ndarray) -> np.ndarray:
         """
         Abstract method for classification of the image
@@ -47,7 +48,6 @@ class CNNImageClassificationStrategy(ImageClassificationStrategy):
 
     @classmethod
     def create(cls, config):
-
         model = load_model_from_filesystem(config["model_name"])
         graph = tf.get_default_graph()
         return cls(model, graph)

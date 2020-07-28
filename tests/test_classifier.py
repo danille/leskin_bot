@@ -1,5 +1,3 @@
-from unittest.mock import Mock
-
 import numpy as np
 
 from src.recognition.classifier import ImageClassifier
@@ -19,4 +17,3 @@ class TestClassifier:
         result = classifier.classify(np.array([1, 1, 1]))
 
         assert result == expected_result
-

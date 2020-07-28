@@ -8,8 +8,8 @@ from src.recognition.preproccesor.strategy import ImagePreprocessStrategy
 
 
 class ImagePreprocessor:
-    def __init__(self, image_crop_strategy: ImagePreprocessStrategy):
-        self._crop_strategy = image_crop_strategy
+    def __init__(self, image_preprocess_strategy: ImagePreprocessStrategy):
+        self._preprocess_strategy = image_preprocess_strategy
 
     def preprocess(self, image: np.ndarray) -> np.ndarray:
-        return self._crop_strategy.run(image)
+        return self._preprocess_strategy.run(image)

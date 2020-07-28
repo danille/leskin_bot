@@ -18,6 +18,7 @@ def graph_mock():
 
     return graph
 
+
 @pytest.fixture
 def classification_strategy_mock():
     classification_strategy = Mock()
