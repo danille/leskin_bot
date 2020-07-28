@@ -43,10 +43,11 @@ class CNNImageClassificationStrategy(ImageClassificationStrategy):
         with self.graph.as_default():
             prediction = self.model.predict(image)
 
-        return np.argmax(prediction)
+        return prediction
 
     @classmethod
-    def create(cls):
-        model = load_model_from_filesystem()
+    def create(cls, config):
+
+        model = load_model_from_filesystem(config["model_name"])
         graph = tf.get_default_graph()
         return cls(model, graph)
