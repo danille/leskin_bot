@@ -26,7 +26,7 @@ class ImageClassifier:
         :return: name of the most probable class
         """
         # TODO: add threshold of classification
-            # TODO: make strategy return the whole prediction array
-        class_index = self._classification_strategy.run(image)
+        prediction = self._classification_strategy.run(image)
+        class_index = int(np.argmax(prediction))
 
         return self.classes[class_index]
