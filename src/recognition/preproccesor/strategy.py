@@ -52,6 +52,6 @@ class BasicImagePreprocessStrategy(ImagePreprocessStrategy):
 
     @classmethod
     def create(cls, config):
-        height = config["height"]
-        width = config["width"]
+        height = int(config["height"])
+        width = int(config["width"])
         return cls(width, height)

@@ -2,15 +2,18 @@ import io
 import os
 
 import cv2
+import numpy as np
 import requests
 import telebot
-import numpy as np
 
-from src.classify import get_cancer_class_from
+# from src.classify import get_cancer_class_from
+from src.recognition.engine import ClassificationEngine
+from src.utils import CONFIG_PATH
 
 token = os.environ['TELEGRAM_ACCESS_TOKEN']
 webhook_url = os.environ['LB_WEBHOOK_URL']
 bot = telebot.TeleBot(token)
+engine = ClassificationEngine.assemble(CONFIG_PATH)
 
 
 @bot.message_handler(commands=['start'])
@@ -29,7 +32,7 @@ def send_image_class(message):
     bot.send_message(message.chat.id, "Received your image. Starting to analyze!")
     img = get_image_from(message)
 
-    cancer_class = get_cancer_class_from(img)
+    cancer_class = engine.classify(img)
 
     if cancer_class:
         bot.reply_to(message, f"Hm, it seems to me like {cancer_class}")

@@ -33,7 +33,7 @@ class ImageClassifier:
         """
         prediction = self._classification_strategy.run(image)
         class_index = int(np.argmax(prediction))
-        if prediction[class_index] >= self._classification_threshold:
+        if prediction[0][class_index] >= self._classification_threshold:
             return self.classes[class_index]
         else:
             return self.default_class
