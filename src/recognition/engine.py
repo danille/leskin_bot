@@ -13,6 +13,14 @@ PREPROCESSOR_CONFIG_SECTION_NAME = "preprocessor"
 CLASSIFICATION_STRATEGY_MAP = {CNNImageClassificationStrategy.NAME: CNNImageClassificationStrategy}
 PREPROCESS_STRATEGY_MAP = {BasicImagePreprocessStrategy.NAME: BasicImagePreprocessStrategy}
 
+CLASSES = ["melanocytic nevi",
+           "melanoma",
+           "benign keratosis-like lesion",
+           "basal cell carcinoma",
+           "actinic keratoses",
+           "vascular lesion",
+           "dermatofibroma"]
+
 
 class ClassificationEngine:
     def __init__(self, image_classifier: ImageClassifier, image_preprocessor: ImagePreprocessor):
@@ -37,19 +45,6 @@ class ClassificationEngine:
 
         preprocessor = cls._assemble_preprocessor(config)
         classifier = cls._assemble_classifier(config)
-        # try:
-        #     classifier_config = config[CLASSIFIER_CONFIG_SECTION_NAME]
-        # except KeyError:
-        #     raise Exception(f"Can not read config for Recognition Engine. "
-        #                     f"Please, make sure that {config_path} contains config for Recognition Engine.")
-        #
-        # crop_strategy_name = classifier_config["crop_strategy"]
-        # classification_strategy_name = classifier_config["classification_strategy"]
-        #
-        # cropper = ImagePreprocessor(PREPROCESS_STRATEGY_MAP[crop_strategy_name].create())
-        # classifier = ImageClassifier(CLASSIFICATION_STRATEGY_MAP[classification_strategy_name].create(),
-        #                              list(range(10)))
-
         return cls(classifier, preprocessor)
 
     @classmethod
@@ -64,7 +59,7 @@ class ClassificationEngine:
         classification_threshold = float(classifier_config["threshold"])
         classifier = ImageClassifier(
             CLASSIFICATION_STRATEGY_MAP[classification_strategy_name].create(classifier_config),
-            list(range(10)),
+            CLASSES,
             "bening nevi",
             classification_threshold=classification_threshold)
 
